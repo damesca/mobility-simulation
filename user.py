@@ -1,8 +1,13 @@
 class User():
 
-    def __init__(self, x=0, y=0):
+    def __init__(self, id=0, x=0, y=0):
+        self.__id = id
         self.__x = x
         self.__y = y
+        self.__register = [[x],[y]]
+
+    def get_id(self):
+        return self.__id
 
     def get_x(self):
         return self.__x
@@ -10,11 +15,17 @@ class User():
     def get_y(self):
         return self.__y
 
-    def set_x(self, x):
-        self.__x = x
+    def get_register(self):
+        return self.__register
 
-    def set_y(self, y):
+    def update_position(self, x, y):
+        self.__x = x
         self.__y = y
+        self.__register[0].append(x)
+        self.__register[1].append(y)
+
+    def reset_register(self):
+        self.__register = [[],[]]
 
     def print_position(self):
-        print("Position: (" + str(self.get_x()) + ", " + str(self.get_y()) + ")")
+        print("(User " + str(self.__id) + ")Position: (" + str(self.__x) + ", " + str(self.__y) + ")")

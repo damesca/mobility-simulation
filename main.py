@@ -1,8 +1,11 @@
 from model import Model
 import matplotlib.pyplot as plt
+from simulator import Simulator
 
-m = Model(100)
-m.simulate()
+#m = Model(100)
+#m.simulate()
 
-#plt.plot([1, 2, 3, 4], [1, 3, 6, 2])
-#plt.show()
+s = Simulator(users=50, steps=1000)
+s.init_users((0, 0), (1000, 1000))
+s.simulate()
+s.print_graph()
