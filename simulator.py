@@ -6,33 +6,34 @@ import math
 
 class Simulator():
 
-    def __init__(self, model='basic', users=10, steps=10):
-        self.number_users = users
+    def __init__(self, model='basic', steps=10):
+        self.number_users = 0
         self.users = []
         self.steps = steps
+        self.next_id = 0
 
         if(model == 'basic'):
             self.model = Model()
         else:
             raise NameError('Incorrect type of model')
 
-    def init_users(self, p_0=(0, 0), p_1=(10, 10)):
+    def init_users(self, num_users=10, p_0=(0, 0), p_1=(10, 10)):
         print("Initialization of users: ")
-        for i in range(0, self.number_users):
-            new_user = User(i, random.uniform(p_0[0], p_1[0]), random.uniform(p_0[1], p_1[1]))
+        self.number_users += num_users
+        for i in range(0, num_users):
+            new_user = User(self.next_id, random.uniform(p_0[0], p_1[0]), random.uniform(p_0[1], p_1[1]))
+            self.next_id += 1
             self.users.append(new_user)
             new_user.print_position()
 
-    def simulate(self, filename='mobility-simulation.txt'):
+    def simulate(self, filename='mobility-simulation.csv'):
         f = open(filename, 'w')
 
+        f.write("step,user,lat,lon\n")
         for s in range(0, self.steps):
             print("# Simulation Step " + str(s) + " #")
-            f.write("# Simulation Step " + str(s) + " #\n")
-            for user in self.users:
-                # Do some simulation stuff
-                print("(User " + str(user.get_id()) + ") Do some simulation stuff")
 
+            for user in self.users:
                 params = self.model.generate_uniform_parameters()
                 x = user.get_x()
                 y = user.get_y()
@@ -40,7 +41,7 @@ class Simulator():
 
                 user.update_position(new_x, new_y)
 
-                f.write("(User " + str(user.get_id()) + ")(" + str(user.get_x()) + "," + str(user.get_y()) + ")\n")
+                f.write(str(s) + ',' + str(user.get_id()) + ',' + str(user.get_x()) + ',' + str(user.get_y()) + '\n')
 
         f.close()
 
