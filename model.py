@@ -8,7 +8,7 @@ class Model():
     def __init__(self, max_steps=10):
         #self.angle = ('up', 'down', 'right', 'left')
         self.angle = (0, 2 * math.pi)
-        self.length = (0, 0.0001)    #[max, min]
+        self.length = (0, 0.0005)    #[max, min]
         self.speed = (1, 2)     #[max, min]
         self.pause = (0, 1)     #[max, min]
 
